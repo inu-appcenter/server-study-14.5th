@@ -1,13 +1,14 @@
 package com.example.todo.Repository;
 
+import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.todo.Domain.Member;
 
-
-public interface MemberRepository extends JpaRepository<Member,Long> {
+public interface JdbcMemberRepository {
+	Member save(Member member);
+	Optional<Member> findById(Long id);
 	Optional<Member> findByEmail(String email);
 	Optional<Member> findByName(String name);
+	List<Member> findAll();
 }
