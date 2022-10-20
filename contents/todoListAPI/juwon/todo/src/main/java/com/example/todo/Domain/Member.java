@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -30,6 +31,6 @@ public class Member {
 	private LocalDateTime updatedAt;
 	@Column
 	private String email;
-	@ManyToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member")
 	private List<ToDo> toDoList = new ArrayList<ToDo>();
 }
