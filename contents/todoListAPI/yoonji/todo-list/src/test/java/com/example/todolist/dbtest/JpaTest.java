@@ -23,8 +23,8 @@ public class JpaTest {
         member.setName("ji kyeong");
         springDataJpaMemberRepository.save(member);
 
-        //Member result = springDataJpaMemberRepository.findById(member.getId()).get();
-        //assertThat(result).isEqualTo(member);
+        Member result = springDataJpaMemberRepository.findById(member.getId()).get();
+        assertThat(result).isEqualTo(member);
     }
 
     @Test
