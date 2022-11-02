@@ -1,6 +1,7 @@
 package com.appcenter.todolist.domain;
 
 import com.appcenter.todolist.common.Timestamped;
+import com.appcenter.todolist.dto.TodoRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,18 +27,32 @@ public class Todo extends Timestamped {
     @JoinColumn
     private Member member;
 
-    @Builder
-    public Todo(String content, Boolean isCompleted, Member member){
-        this.content = content;
-        this. isCompleted = isCompleted;
-        this. member = member;
+
+    public Todo(TodoRequestDto todoRequestDto){
+        this.content = todoRequestDto.getContents();
+        this.isCompleted = todoRequestDto.getIsCompleted();
+        this.member = todoRequestDto.getMember();
     }
 
-    public static Todo createTodo(String content, Boolean isCompleted){
+    @Builder
+    public Todo(String content, Boolean isCompleted, Member member) {
+        this.content = content;
+        this.isCompleted = isCompleted;
+        this.member = member;
+    }
+
+    public static Todo createTodo(String content, Boolean isCompleted, Member member){
         return Todo.builder()
                 .content(content)
                 .isCompleted(isCompleted)
+                .member(member)
                 .build();
+    }
+
+    public void update(TodoRequestDto todoRequestDto){
+        this.content = todoRequestDto.getContents();
+        this.isCompleted = todoRequestDto.getIsCompleted();
+        this.member = todoRequestDto.getMember();
     }
 
 }
