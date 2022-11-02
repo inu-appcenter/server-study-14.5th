@@ -32,4 +32,8 @@ public class Todo extends BaseTimeEntity{
         this.isCompleted = isCompleted;
         this.member = member;
     }
+
+    public void update(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
 }
