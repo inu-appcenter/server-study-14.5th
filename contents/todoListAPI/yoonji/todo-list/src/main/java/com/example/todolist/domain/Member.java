@@ -34,4 +34,9 @@ public class Member extends BaseTimeEntity{
         this.name = name;
         this.todoList = todoList;
     }
+
+    public void update(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
 }
