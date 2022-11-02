@@ -1,6 +1,8 @@
 package com.appcenter.todolist.domain;
 
 import com.appcenter.todolist.common.Timestamped;
+import com.appcenter.todolist.dto.MemberRequestDto;
+import com.appcenter.todolist.dto.TodoRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +29,14 @@ public class Member extends Timestamped {
     private String name;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Todo> todoList = new ArrayList<Todo>();
+    private List<Todo> todoList = new ArrayList<>();
+
+    public Member(MemberRequestDto memberRequestDto){
+        this.email = memberRequestDto.getEmail();
+        this.age = memberRequestDto.getAge();
+        this.name = memberRequestDto.getName();
+        this.todoList = memberRequestDto.getTodoLists();
+    }
 
     @Builder
     public Member(String email, int age, String name){
@@ -42,6 +51,13 @@ public class Member extends Timestamped {
                 .age(age)
                 .name(name)
                 .build();
+    }
+
+    public void update(MemberRequestDto memberRequestDto){
+        this.email = memberRequestDto.getEmail();
+        this.age = memberRequestDto.getAge();
+        this.name = memberRequestDto.getName();
+        this.todoList = memberRequestDto.getTodoLists();
     }
 
     public void planTodo(Todo todo){
