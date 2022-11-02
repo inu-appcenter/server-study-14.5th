@@ -17,7 +17,7 @@ public class Todo extends Timestamped {
     @Id
     private Long todoId;
 
-    @Column(columnDefinition = "varchar(100)", nullable = false)
+    @Column(nullable = false, length = 100)
     private String content;
 
     @Column(columnDefinition = "False", nullable = false)
@@ -27,13 +27,6 @@ public class Todo extends Timestamped {
     @JoinColumn
     private Member member;
 
-
-    public Todo(TodoRequestDto todoRequestDto){
-        this.content = todoRequestDto.getContents();
-        this.isCompleted = todoRequestDto.getIsCompleted();
-        this.member = todoRequestDto.getMember();
-    }
-
     @Builder
     public Todo(String content, Boolean isCompleted, Member member) {
         this.content = content;
@@ -41,12 +34,10 @@ public class Todo extends Timestamped {
         this.member = member;
     }
 
-    public static Todo createTodo(String content, Boolean isCompleted, Member member){
-        return Todo.builder()
-                .content(content)
-                .isCompleted(isCompleted)
-                .member(member)
-                .build();
+    public Todo(TodoRequestDto todoRequestDto){
+        this.content = todoRequestDto.getContents();
+        this.isCompleted = todoRequestDto.getIsCompleted();
+        this.member = todoRequestDto.getMember();
     }
 
     public void update(TodoRequestDto todoRequestDto){
