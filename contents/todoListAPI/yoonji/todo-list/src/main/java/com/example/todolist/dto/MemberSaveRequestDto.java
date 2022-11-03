@@ -12,7 +12,6 @@ public class MemberSaveRequestDto {
     private int age;
     private String name;
 
-
     public MemberSaveRequestDto(Long id, String email, int age, String name) {
         this.id = id;
         this.email = email;

@@ -1,5 +1,6 @@
 package com.example.todolist.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Todo extends BaseTimeEntity{
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
     private Member member;
 
     @Builder

@@ -5,9 +5,7 @@ import com.example.todolist.dto.MemberResponseDto;
 import com.example.todolist.dto.MemberSaveRequestDto;
 import com.example.todolist.dto.MemberUpdateRequestDto;
 import com.example.todolist.service.MemberService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
