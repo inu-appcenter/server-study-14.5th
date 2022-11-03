@@ -26,7 +26,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Test with Swagger")
+                .title("ToDo API")
+                .description("ToDo API 서비스 입니다.")
                 .version("1.0.0")
                 .build();
     }
