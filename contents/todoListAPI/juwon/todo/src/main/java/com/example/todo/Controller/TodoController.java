@@ -1,46 +1,43 @@
 package com.example.todo.Controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import com.example.todo.DTO.ToDoDTO;
+import com.example.todo.Service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.todo.Domain.Member;
-import com.example.todo.Repository.TodoRepository;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TodoController {
-	
-	
-	
-	 @PersistenceContext // or even @Autowired
-	 private EntityManager em;
-	 
-	
-	 @Autowired
-	 TodoRepository repo;
-	 
-	 
-	@GetMapping("/create")
-	List<Member> hello() {
+	private ToDoService todoService;
 
-		Member mem = new Member();
-		mem.setName("juwon");
-		mem.setAge(20);
-		mem.setCreatedAt(LocalDateTime.now());
-		mem.setUpdatedAt(LocalDateTime.now());
-		mem.setEmail("juwon@juwon.com");
-		repo.save(mem);
-		
-
-		Member mem2 = new Member();
-		mem2.setName("null member");
-		repo.save(mem2);
-		return repo.findAll();
+	@Autowired
+	public TodoController(ToDoService toDoService) {
+		this.todoService = toDoService;
 	}
+
+	// todo 생성
+	@PostMapping("/new-todo")
+	public Long createToDo(@RequestBody ToDoDTO todoDTO) {
+		return todoService.create(todoDTO);
+	}
+
+	// todo 식별자 조회
+	@GetMapping("/todos/{todo-id}")
+	public ToDoDTO findToDo(@PathVariable Long id) {
+		return todoService.findById(id);
+	}
+
+	// todo 수정
+	@PutMapping("/todos/{todo-id}")
+	public Long updateToDo(@PathVariable Long id, @RequestBody ToDoDTO toDoDTO) {
+		return todoService.update(id, toDoDTO);
+	}
+
+	// todo 삭제
+	@DeleteMapping("/todos/{todo-id}")
+	public Long deleteTodo(@PathVariable Long id) {
+		return todoService.delete(id);
+	}
+
 }
