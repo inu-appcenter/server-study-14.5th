@@ -28,7 +28,7 @@ public class Todo extends Timestamped {
     private Boolean isCompleted;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
@@ -49,5 +49,4 @@ public class Todo extends Timestamped {
         this.isCompleted = todoRequestDto.getIsCompleted();
         this.member = todoRequestDto.getMember();
     }
-
 }

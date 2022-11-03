@@ -4,3 +4,9 @@ spring:
     url: jdbc:mysql://localhost:3306/appcenter?serverTimezone=Asia/Seoul
     username: root
     password: whfdjqakfuqek!96
+  jpa:
+    properties:
+      hibernate:
+        show_sql: 'true'
+    hibernate:
+      ddl-auto: update

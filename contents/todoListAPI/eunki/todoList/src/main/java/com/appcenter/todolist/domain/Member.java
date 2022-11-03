@@ -26,13 +26,12 @@ public class Member extends Timestamped {
     @Column(columnDefinition = "varchar(20) not null") //DDL
     private String email;
 
-
     @Positive
-    @Column(columnDefinition = "default 1 not null")
+    @Column(columnDefinition = "default 1")
     private int age;
 
     @Length(max = 20)
-    @Column(columnDefinition = "varchar(20) default 'NoName' not null")
+    @Column(columnDefinition = "varchar(20) default 'NoName'")
     private String name;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
