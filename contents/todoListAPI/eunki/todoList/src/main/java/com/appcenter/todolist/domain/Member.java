@@ -3,15 +3,17 @@ package com.appcenter.todolist.domain;
 import com.appcenter.todolist.common.Timestamped;
 import com.appcenter.todolist.dto.MemberRequestDto;
 import com.appcenter.todolist.dto.TodoRequestDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//기본생성자 접근제어를 PROTECTED로 -> @NonNull인 필드 누락 방지
 @Entity
 @Getter
 public class Member extends Timestamped {
@@ -19,13 +21,18 @@ public class Member extends Timestamped {
     @Id
     private Long memberId;
 
-    @Column(nullable = false, length = 20)
+
+    @Length(max = 20) //validation
+    @Column(columnDefinition = "varchar(20) not null") //DDL
     private String email;
 
-    @Column(nullable = false)
+
+    @Positive
+    @Column(columnDefinition = "default 1 not null")
     private int age;
 
-    @Column(nullable = false, length = 20)
+    @Length(max = 20)
+    @Column(columnDefinition = "varchar(20) default 'NoName' not null")
     private String name;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)

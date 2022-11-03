@@ -2,13 +2,16 @@ package com.appcenter.todolist.domain;
 
 import com.appcenter.todolist.common.Timestamped;
 import com.appcenter.todolist.dto.TodoRequestDto;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//기본생성자 접근제어를 PROTECTED로 -> @NonNull인 필드 누락 방지
 @Entity
 @Getter
 public class Todo extends Timestamped {
@@ -17,10 +20,11 @@ public class Todo extends Timestamped {
     @Id
     private Long todoId;
 
-    @Column(nullable = false, length = 100)
+    @Length(max = 100)
+    @Column(columnDefinition = "varchar(100) not null")
     private String content;
 
-    @Column(columnDefinition = "False", nullable = false)
+    @Column(columnDefinition = "not null")
     private Boolean isCompleted;
 
     @ManyToOne
