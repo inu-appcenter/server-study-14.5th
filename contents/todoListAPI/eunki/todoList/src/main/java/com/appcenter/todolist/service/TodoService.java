@@ -24,9 +24,11 @@ public class TodoService {
         );
         todo.update(todoRequestDto);
     }
-    //    @PatchMapping(value = "{/todoId}")
-    //    public void patchTodo(@PathVariable Long todoId){
-    //
-    //    }
 
+    public Todo findTodo(Long todoId){
+        Todo todo = todoRepository.findById(todoId).orElseThrow(
+                () -> new RuntimeException("목록에 없는 계획입니다")
+        );
+        return todo;
+    }
 }

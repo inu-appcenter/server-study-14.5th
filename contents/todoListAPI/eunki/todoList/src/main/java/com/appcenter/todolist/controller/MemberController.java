@@ -36,9 +36,7 @@ public class MemberController {
     //Member와 해당 Member의 TodoList 조회 - memberId 이용
     @GetMapping("/members/{memberId}")
     public List<Todo> readTodo(@PathVariable Long memberId){
-        Member member = memberRepository.findById(memberId).orElseThrow(
-                () -> new RuntimeException("목록에 없는 Todo입니다")
-        );
+        Member member = memberService.findMember(memberId);
         return member.getTodoList();
     }
 
@@ -57,11 +55,9 @@ public class MemberController {
     //Todo 생성
     @PostMapping("/members/{memberId}/todos")
     public void createTodo(@PathVariable Long memberId, @RequestBody TodoRequestDto todoRequestDto){
-        Member member = memberRepository.findById(memberId).orElseThrow(
-                () -> new RuntimeException("존재하지 않는 회원입니다")
-        );
+
+        Member member = memberService.findMember(memberId);
         Todo todo = new Todo(todoRequestDto);
         member.planTodo(todo);
     }
-
 }

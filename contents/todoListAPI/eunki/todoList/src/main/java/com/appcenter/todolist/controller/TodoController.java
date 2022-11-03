@@ -25,9 +25,7 @@ public class TodoController {
     //Todo와 해당 Todo 작성한 Member 조회 - todoId 이용
     @GetMapping("/todos/{todoId}")
     public Member readMember(@PathVariable Long todoId){
-        Todo todo = todoRepository.findById(todoId).orElseThrow(
-                () -> new RuntimeException("목록에 없는 계획입니다")
-        );
+        Todo todo = todoService.findTodo(todoId);
         return todo.getMember();
     }
 

@@ -27,4 +27,10 @@ public class MemberService {
         member.update(memberRequestDto);
     }
 
+    public Member findMember(Long memberId){
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                () -> new RuntimeException("존재하지 않는 회원입니다")
+        );
+        return member;
+    }
 }
