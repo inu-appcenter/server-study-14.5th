@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 public class MemberController {
 
+
     private final MemberRepository memberRepository;
     private final MemberService memberService;
 
