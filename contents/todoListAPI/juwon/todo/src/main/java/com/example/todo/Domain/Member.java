@@ -1,36 +1,51 @@
 package com.example.todo.Domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Positive;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
-@Data
-public class Member {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Member extends BaseTimeEntity{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@Column
+
+	@Length(max = 20)
+	@Column(columnDefinition = "varchar(20) default 'DefaultUser'")
 	private String name;
-	@Column
+
+	@Positive
+	@Column(columnDefinition = "default 1")
 	private int age;
-	@Column
-	private LocalDateTime createdAt;
-	@Column
-	private LocalDateTime updatedAt;
-	@Column
+
+	@Column(columnDefinition = "varchar(30) default 'example@example.com'")
 	private String email;
 	@OneToMany(mappedBy = "member")
 	private List<ToDo> toDoList = new ArrayList<ToDo>();
+
+	@Builder
+	public Member(Long id, String name, int age, String email, List<ToDo> toDoList) {
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.email = email;
+		this.toDoList = toDoList;
+	}
+
+	public void update(String name, int age, String email) {
+		this.name = name;
+		this.age = age;
+		this.email = email;
+	}
+
+	public void addToDo(ToDo todo) {
+		this.toDoList.add(todo);
+	}
 }
