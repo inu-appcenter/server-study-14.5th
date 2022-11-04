@@ -1,28 +1,35 @@
 package com.example.todolist;
 
-import com.example.todolist.repository.JdbcTemplateMemberRepository;
-import com.example.todolist.repository.JdbcTemplateTodoRepository;
-import com.example.todolist.repository.MemberRepository;
-import com.example.todolist.repository.TodoRepository;
+import com.example.todolist.repository.*;
+import com.example.todolist.service.MemberService;
+import com.example.todolist.service.TodoService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.sql.DataSource;
-
+@Configuration
 public class SpringConfig {
 
-    private final DataSource dataSource;
+    private final SpringDataJpaMemberRepository memberRepository;
+    private final SpringDataJpaTodoRepository todoRepository;
 
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public SpringConfig(SpringDataJpaMemberRepository memberRepository, SpringDataJpaTodoRepository todoRepository) {
+        this.memberRepository = memberRepository;
+        this.todoRepository = todoRepository;
     }
 
     @Bean
-    public MemberRepository memberRepository() {
-        return new JdbcTemplateMemberRepository(dataSource);
+    public MemberService memberService() {
+        return new MemberService(memberRepository);
     }
 
     @Bean
-    public TodoRepository todoRepository() {
-        return new JdbcTemplateTodoRepository(dataSource);
+    public TodoService todoService() {
+        return new TodoService(todoRepository, memberRepository);
     }
+
 }

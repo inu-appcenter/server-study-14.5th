@@ -45,8 +45,6 @@ public class JdbcTemplateTodoRepository implements TodoRepository{
             Todo toDo = new Todo();
             toDo.setId(rs.getLong("id"));
             toDo.setContent(rs.getString("content"));
-            toDo.setCreatedAt(LocalDateTime.parse(rs.getString("createdAt")));
-            toDo.setUpdatedAt(LocalDateTime.parse(rs.getString("updatedAt")));
             toDo.setCompleted(rs.getBoolean("isCompleted"));
             toDo.setMember((Member) rs.getObject("member"));
             return toDo;
