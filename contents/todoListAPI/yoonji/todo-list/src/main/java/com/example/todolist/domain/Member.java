@@ -1,12 +1,8 @@
 package com.example.todolist.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,30 +10,32 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
-public class Member {
+public class Member extends BaseTimeEntity{
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String email;
 
-    @Column
     private int age;
 
-    @Column
     private String name;
-
-    @Column
-    private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "member")
     private List<Todo> todoList = new ArrayList<>();
 
+    @Builder
+    public Member(Long id, String email, int age, String name, List<Todo> todoList) {
+        this.id = id;
+        this.email = email;
+        this.age = age;
+        this.name = name;
+        this.todoList = todoList;
+    }
+
+    public void update(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
 }

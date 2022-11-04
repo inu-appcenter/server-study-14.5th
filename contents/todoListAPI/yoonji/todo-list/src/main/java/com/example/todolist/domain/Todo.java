@@ -1,36 +1,41 @@
 package com.example.todolist.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Todo {
+public class Todo extends BaseTimeEntity{
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String content;
 
-    @Column
     private boolean isCompleted;
 
-    @Column
-    private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime updatedAt;
-
     @ManyToOne
+    @JoinColumn
+    @JsonIgnore
     private Member member;
 
+    @Builder
+    public Todo(Long id, String content, boolean isCompleted, Member member) {
+        this.id = id;
+        this.content = content;
+        this.isCompleted = isCompleted;
+        this.member = member;
+    }
+
+    public void update(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
 }
