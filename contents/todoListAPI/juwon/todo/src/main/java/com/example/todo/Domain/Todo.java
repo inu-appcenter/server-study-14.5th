@@ -1,23 +1,22 @@
 package com.example.todo.Domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ToDo extends BaseTimeEntity{
+public class Todo extends BaseTimeEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Length(max = 100)
-	@Column(columnDefinition = "varchar(100) default 'blankContents'")
+	@NotNull(message = "내용을 입력해주세요")
 	private String contents;
 
-	@Column(columnDefinition = "default false")
+	@NotNull
 	private Boolean isCompleted;
 
 	@ManyToOne
@@ -25,15 +24,15 @@ public class ToDo extends BaseTimeEntity{
 	private Member member;
 
 	@Builder
-	public ToDo(Long id, String contents, Member member, Boolean isCompleted) {
+	public Todo(Long id, String contents, Member member, Boolean isCompleted) {
 		this.id = id;
 		this.contents = contents;
 		this.member = member;
 		this.isCompleted = isCompleted;
 	}
 
-	public void update(Boolean isCompleted) {
-		this.isCompleted = isCompleted;
+	public void updateIsCompleted(Boolean isCompleted) {
+		this.isCompleted = !isCompleted;
 	}
 
 }
