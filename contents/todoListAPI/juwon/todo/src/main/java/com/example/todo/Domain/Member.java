@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.NotNull;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Getter
@@ -17,35 +16,27 @@ public class Member extends BaseTimeEntity{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@Length(max = 20)
-	@Column(columnDefinition = "varchar(20) default 'DefaultUser'")
+	@NotNull(message = "이름을 적어주세요")
 	private String name;
 
-	@Positive
-	@Column(columnDefinition = "default 1")
+	@NotNull(message = "나이를 적어주세요")
 	private int age;
 
-	@Column(columnDefinition = "varchar(30) default 'example@example.com'")
+	@NotNull(message = "이메일을 적어주세요")
 	private String email;
+
 	@OneToMany(mappedBy = "member")
-	private List<ToDo> toDoList = new ArrayList<ToDo>();
+	private List<Todo> toDoList = new ArrayList<Todo>();
 
 	@Builder
-	public Member(Long id, String name, int age, String email, List<ToDo> toDoList) {
-		this.id = id;
-		this.name = name;
-		this.age = age;
-		this.email = email;
-		this.toDoList = toDoList;
-	}
-
-	public void update(String name, int age, String email) {
+	public Member(String name, int age, String email) {
 		this.name = name;
 		this.age = age;
 		this.email = email;
 	}
 
-	public void addToDo(ToDo todo) {
-		this.toDoList.add(todo);
+	public void update(String name, int age) {
+		this.name = name;
+		this.age = age;
 	}
 }
