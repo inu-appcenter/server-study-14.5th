@@ -1,67 +1,66 @@
 package com.example.todo.Service;
 
-import com.example.todo.DTO.MemberDTO;
+import com.example.todo.Domain.Todo;
+import com.example.todo.Dto.MemberRequestDto;
 import com.example.todo.Domain.Member;
+import com.example.todo.Dto.MemberResponseDto;
+import com.example.todo.Dto.TodoResponseDto;
 import com.example.todo.Repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    @Autowired
-    public MemberService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
-
     // member 등록
-    public Long register(MemberDTO memberDTO) {
-        return memberRepository.save(memberDTO.toEntity()).getId();
+    public Long create(MemberRequestDto memberDTO) {
+        log.info("Member 생성");
+        Member member = memberDTO.toEntity();
+        log.info("Member 생성 준비");
+        memberRepository.save(member);
+        log.info("Member 생성 완료 | id = " + member.getId());
+        return member.getId();
     }
 
     // member 전체 조회
     public List<Member> findMembers() {
+        log.info("Member 전체 조회 진행");
         return memberRepository.findAll();
     }
 
     // member 식별자 조회
-    public MemberDTO findOneId(Long id) {
+    public MemberResponseDto findOneId(Long id) {
+        log.info("Member id로 조회 | id = " + id);
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 회원입니다"));
-        return new MemberDTO(member);
-    }
-
-    // member 이메일 조회
-    public MemberDTO findOneEmail(String email) {
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 회원입니다"));
-        return new MemberDTO(member);
-    }
-
-    // member 이름 조회
-    public MemberDTO findOneName(String name) {
-        Member member = memberRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 회원입니다"));
-        return new MemberDTO(member);
+        log.info("Member id로 조회 완료 | id = " + id);
+        return new MemberResponseDto(member);
     }
 
     // member 수정
-    public Long update(Long id, MemberDTO memberDTO) {
+    public void update(Long id, MemberRequestDto memberDTO) {
+        log.info("Member 수정 | id = " + id);
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 회원입니다"));
-        member.update(memberDTO.getName(), memberDTO.getAge(), memberDTO.getEmail());
-        return memberDTO.getId();
+        log.info("Member 수정 준비 | id = " + id);
+        member.update(memberDTO.getName(), memberDTO.getAge());
+        log.info("Member 수정 완료 | id = " + id);
     }
 
     // member 삭제
-    public Long delete(Long id) {
+    public void delete(Long id) {
+        log.info("Member 삭제 | id = " + id);
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 회원입니다"));
+        log.info("Member 삭제 준비 | id = " + id);
         memberRepository.deleteById(id);
-        return member.getId();
+        log.info("Member 삭제 완료 | id = " + id);
     }
 
 }
