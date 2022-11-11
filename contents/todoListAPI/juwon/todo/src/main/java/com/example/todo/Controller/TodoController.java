@@ -1,43 +1,41 @@
 package com.example.todo.Controller;
 
-import java.util.List;
-
-import com.example.todo.DTO.ToDoDTO;
-import com.example.todo.Service.ToDoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.todo.Dto.TodoRequestDto;
+import com.example.todo.Dto.TodoResponseDto;
+import com.example.todo.Service.TodoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
+@Api(tags = {"Member"})
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/todos")
 public class TodoController {
-	private ToDoService todoService;
-
-	@Autowired
-	public TodoController(ToDoService toDoService) {
-		this.todoService = toDoService;
-	}
-
-	// todo 생성
-	@PostMapping("/new-todo")
-	public Long createToDo(@RequestBody ToDoDTO todoDTO) {
+	private TodoService todoService;
+	
+	@PostMapping
+	@ApiOperation("todo 생성")
+	public Long createTodo(@RequestBody TodoRequestDto todoDTO) {
 		return todoService.create(todoDTO);
 	}
 
-	// todo 식별자 조회
-	@GetMapping("/todos/{todo-id}")
-	public ToDoDTO findToDo(@PathVariable Long id) {
+	@GetMapping("/{todo-id}")
+	@ApiOperation("todo id로 조회")
+	public TodoResponseDto findTodo(@PathVariable Long id) {
 		return todoService.findById(id);
 	}
 
-	// todo 수정
-	@PutMapping("/todos/{todo-id}")
-	public Long updateToDo(@PathVariable Long id, @RequestBody ToDoDTO toDoDTO) {
-		return todoService.update(id, toDoDTO);
+	@PutMapping("/{todo-id}")
+	@ApiOperation("todo 정보 수정")
+	public void updateTodo(@PathVariable Long id, @RequestBody TodoRequestDto toDoDTO) {
+		 todoService.update(id);
 	}
 
-	// todo 삭제
-	@DeleteMapping("/todos/{todo-id}")
-	public Long deleteTodo(@PathVariable Long id) {
-		return todoService.delete(id);
+	@DeleteMapping("/{todo-id}")
+	@ApiOperation("todo 정보 삭제")
+	public void deleteTodo(@PathVariable Long id) {
+		todoService.delete(id);
 	}
 
 }

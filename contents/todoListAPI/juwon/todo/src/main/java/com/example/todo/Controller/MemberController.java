@@ -1,61 +1,51 @@
 package com.example.todo.Controller;
 
-import com.example.todo.DTO.MemberDTO;
+import com.example.todo.Dto.MemberRequestDto;
 import com.example.todo.Domain.Member;
+import com.example.todo.Dto.MemberResponseDto;
 import com.example.todo.Service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Api(tags = {"Member"})
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/members")
 public class MemberController {
     private MemberService memberService;
 
-    @Autowired
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
+    
+    @PostMapping
+    @ApiOperation("회원 가입")
+    public Long registerMember(@RequestBody MemberRequestDto memberDTO) {
+        return memberService.create(memberDTO);
     }
 
-    // member 생성
-    @PostMapping("/new-member")
-    public Long registerMember(@RequestBody MemberDTO memberDTO) {
-        return memberService.register(memberDTO);
-    }
-
-    // member 전체 조회
-    @GetMapping("/members/")
+    
+    @GetMapping
+    @ApiOperation("회원 전체 조회")
     public List<Member> findMembers() {
         return memberService.findMembers();
     }
-
-    // member 식별자 조회
-    @GetMapping("/members/{member-id}")
-    public MemberDTO findMemberById(@PathVariable Long id) {
+    
+    @GetMapping("/{member-id}")
+    @ApiOperation("회원 아이디로 조회")
+    public MemberResponseDto findMemberById(@PathVariable Long id) {
         return memberService.findOneId(id);
     }
-
-    // member 이메일 조회
-    @GetMapping("/members/email/{email}")
-    public MemberDTO findMemberByEmail(@PathVariable String email) {
-        return memberService.findOneEmail(email);
+    
+    @PutMapping("/{member-id}")
+    @ApiOperation("회원 정보 수정")
+    public void updateMember(@PathVariable Long id, @RequestBody MemberRequestDto memberDTO) {
+        memberService.update(id, memberDTO);
     }
-
-    // member 이름 조회
-    @GetMapping("/members/name/{name}")
-    public MemberDTO findMemberByName(@PathVariable String name) {
-        return memberService.findOneName(name);
-    }
-
-    // member 수정
-    @PutMapping("/members/{member-id}")
-    public Long updateMember(@PathVariable Long id, @RequestBody MemberDTO memberDTO) {
-        return memberService.update(id, memberDTO);
-    }
-
-    // member 삭제
-    @DeleteMapping("/members/{member-id}")
-    public Long deleteMember(@PathVariable Long id) {
-        return memberService.delete(id);
+    
+    @DeleteMapping("/{member-id}")
+    @ApiOperation("회원 정보 삭제")
+    public void deleteMember(@PathVariable Long id) {
+        memberService.delete(id);
     }
 }
