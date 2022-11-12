@@ -1,12 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Member;
-import com.example.demo.dto.MemberSaveRequestDto;
-import com.example.demo.dto.MemberUpdateRequestDto;
+import com.example.demo.dto.member.MemberSaveRequestDto;
+import com.example.demo.dto.member.MemberUpdateRequestDto;
 import com.example.demo.repository.JpaMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long saveMember(MemberSaveRequestDto memberSaveRequestDto) {
         validateDuplicateEmail(memberSaveRequestDto);
-        Member member = memberSaveRequestDto.entity();
+        Member member = Member.createMember(memberSaveRequestDto.getEmail(), memberSaveRequestDto.getAge(), memberSaveRequestDto.getName());
 
         memberRepository.save(member);
         return  member.getId();
