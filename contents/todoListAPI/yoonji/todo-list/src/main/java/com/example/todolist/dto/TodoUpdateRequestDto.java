@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TodoUpdateRequestDto {
 
-    private boolean isCompleted;
+    private Boolean isCompleted;
 
-    public TodoUpdateRequestDto(boolean isCompleted) {
+    public TodoUpdateRequestDto(Boolean isCompleted) {
         this.isCompleted = isCompleted;
     }
 }

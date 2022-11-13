@@ -8,13 +8,13 @@ import lombok.Getter;
 @Getter
 public class TodoResponseDto {
     private String content;
-    private boolean isCompleted;
+    private Boolean isCompleted;
     private Member member;
 
     @Builder
     public TodoResponseDto(Todo todo) {
         this.content = todo.getContent();
-        this.isCompleted = todo.isCompleted();
+        this.isCompleted = todo.getIsCompleted();
         this.member = todo.getMember();
     }
 }
