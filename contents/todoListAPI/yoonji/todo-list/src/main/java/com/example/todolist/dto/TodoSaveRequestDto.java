@@ -12,9 +12,9 @@ public class TodoSaveRequestDto {
     private Long memberId;
     private Long id;
     private String content;
-    private boolean isCompleted;
+    private Boolean isCompleted;
 
-    public TodoSaveRequestDto(Long id, String content, boolean isCompleted) {
+    public TodoSaveRequestDto(Long id, String content, Boolean isCompleted) {
         this.id = id;
         this.content = content;
         this.isCompleted = isCompleted;
