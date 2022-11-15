@@ -1,17 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Member;
-import com.example.demo.dto.MemberSaveRequestDto;
-import com.example.demo.dto.MemberUpdateRequestDto;
+import com.example.demo.dto.member.MemberResponseDto;
+import com.example.demo.dto.member.MemberSaveRequestDto;
+import com.example.demo.dto.member.MemberUpdateRequestDto;
 import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping("/members")
 public class MemberController {
 
@@ -26,32 +26,36 @@ public class MemberController {
     @PostMapping
     public Long saveMember (@RequestBody MemberSaveRequestDto memberSaveRequestDto) {
         Long saveMember = memberService.saveMember(memberSaveRequestDto);
-        System.out.println("MemberController.saveMember");
         return saveMember;
     }
 
     // 회원 목록
     @GetMapping
-    public List<Member> members() {
+    public List<MemberResponseDto> members() {
         List<Member> members = memberService.findMembers();
-        return members;
+        List<MemberResponseDto> memberResponseDtoList = members.stream()
+                .map(member -> new MemberResponseDto(member))
+                .collect(Collectors.toList());
+
+        return memberResponseDtoList;
     }
 
     // 회원 조회
-    @GetMapping("/{member-id}")
-    public Optional<Member> findById (@PathVariable Long memberId) {
-        Optional<Member> member = memberService.findById(memberId);
-        return member;
+    @GetMapping("/{memberId}")
+    public MemberResponseDto findById (@PathVariable Long memberId) {
+        Member member = memberService.findById(memberId).get();
+
+        return new MemberResponseDto(member);
     }
 
     // 회원 수정
-    @PatchMapping("/{member-id}")
+    @PatchMapping("/{memberId}")
     public void updateMember (@PathVariable Long memberId, @RequestBody MemberUpdateRequestDto memberUpdateRequestDto) {
         memberService.updateMember(memberId, memberUpdateRequestDto);
     }
 
     // 회원 삭제
-    @DeleteMapping("/{member-id}")
+    @DeleteMapping("/{memberId}")
     public void deleteMember (@PathVariable Long memberId) {
         memberService.deleteMember(memberId);
     }

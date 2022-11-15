@@ -1,10 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Member;
 import com.example.demo.domain.ToDo;
-import com.example.demo.dto.ToDoSaveRequestDto;
-import com.example.demo.dto.ToDoUpdateRequestDto;
-import org.springframework.stereotype.Service;
+import com.example.demo.dto.todo.ToDoSaveRequestDto;
+import com.example.demo.dto.todo.ToDoUpdateRequestDto;
 
 import java.util.Optional;
 

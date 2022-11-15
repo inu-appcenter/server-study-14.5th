@@ -2,16 +2,18 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Member;
 import com.example.demo.domain.ToDo;
-import com.example.demo.dto.ToDoSaveRequestDto;
-import com.example.demo.dto.ToDoUpdateRequestDto;
+import com.example.demo.dto.todo.ToDoSaveRequestDto;
+import com.example.demo.dto.todo.ToDoUpdateRequestDto;
 import com.example.demo.repository.JpaMemberRepository;
 import com.example.demo.repository.JpaToDoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+// @Slf4j
 public class ToDoServiceImpl implements ToDoService {
 
 
@@ -28,11 +30,9 @@ public class ToDoServiceImpl implements ToDoService {
     @Override
     public Long saveToDo (Long memberId, ToDoSaveRequestDto toDoSaveRequestDto) {
         Member member = memberRepository.findById(memberId).get();
-        ToDo toDo = toDoSaveRequestDto.entity();
-        toDo.setMember(member);
+        ToDo toDo = ToDo.createTodo(toDoSaveRequestDto.getContent(), toDoSaveRequestDto.getIsCompleted(), member);
 
         toDoRepository.save(toDo);
-
         return toDo.getId();
     }
 
@@ -46,7 +46,7 @@ public class ToDoServiceImpl implements ToDoService {
     @Override
     public void updateToDo(Long toDoId, ToDoUpdateRequestDto toDoUpdateRequestDto) {
         ToDo toDo = toDoRepository.findById(toDoId).get();
-        toDo.setCompleted(toDoUpdateRequestDto.isCompleted());
+        toDo.setCompleted();
 
         toDoRepository.save(toDo);
     }

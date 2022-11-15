@@ -1,7 +1,6 @@
-package com.example.demo.dto;
+package com.example.demo.dto.todo;
 
 
-import com.example.demo.domain.ToDo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,19 +11,11 @@ public class ToDoSaveRequestDto {
 
     private Long id;
     private String content;
-    private boolean isCompleted;
+    private Boolean isCompleted;
 
     public ToDoSaveRequestDto(Long id, String content, boolean isCompleted) {
         this.id = id;
         this.content = content;
         this.isCompleted = isCompleted;
-    }
-
-    public ToDo entity() {
-        return ToDo.builder()
-                .id(id)
-                .content(content)
-                .isCompleted(isCompleted)
-                .build();
     }
 }
