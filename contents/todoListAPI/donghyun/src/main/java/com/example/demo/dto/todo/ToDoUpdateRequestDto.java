@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.dto.todo;
 
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -10,10 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
-// @Slf4j
+@Slf4j
 public class ToDoServiceImpl implements ToDoService {
 
 
@@ -28,12 +29,17 @@ public class ToDoServiceImpl implements ToDoService {
 
     // todo 생성
     @Override
-    public Long saveToDo (Long memberId, ToDoSaveRequestDto toDoSaveRequestDto) {
-        Member member = memberRepository.findById(memberId).get();
+    public Long saveToDo (String memberId, ToDoSaveRequestDto toDoSaveRequestDto) {
+        Member member = memberRepository.getByMemberId(memberId).get();
         ToDo toDo = ToDo.createTodo(toDoSaveRequestDto.getContent(), toDoSaveRequestDto.getIsCompleted(), member);
 
         toDoRepository.save(toDo);
         return toDo.getId();
+    }
+
+    @Override
+    public List<ToDo> findToDos() {
+        return toDoRepository.findAll();
     }
 
     // todo 조회
