@@ -13,12 +13,12 @@ public class ToDoResponseDto {
 
     private Boolean isCompleted;
 
-    private MemberResponseDto member;
+    // private MemberResponseDto member;
 
     public ToDoResponseDto (ToDo todo) {
         this.id = todo.getId();
         this.content = todo.getContent();
         this.isCompleted = todo.getIsCompleted();
-        this.member = new MemberResponseDto(todo.getMember());
+        // this.member = new MemberResponseDto(todo.getMember());
     }
 }

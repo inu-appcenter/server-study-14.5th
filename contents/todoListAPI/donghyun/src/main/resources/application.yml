@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: 3540
+    username: 1111
+    password: 1111
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -20,4 +20,10 @@ logging:
       springframework:
         nodeValue: debug
         web: debug
+      apache:
+        coyote:
+          http11: debug
 
+springboot:
+  jwt:
+    secret: flature!@#

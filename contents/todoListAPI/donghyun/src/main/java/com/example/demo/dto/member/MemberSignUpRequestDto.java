@@ -7,15 +7,24 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberSaveRequestDto {
+public class MemberSignUpRequestDto {
+
+    private String memberId;
+
+    private String password;
     private String name;
     private String email;
     private int age;
 
+    private String role;
 
-    public MemberSaveRequestDto(String name, String email, int age) {
+
+    public MemberSignUpRequestDto(String memberId, String password, String name, String email, int age, String role) {
+        this.memberId = memberId;
+        this.password = password;
         this.name = name;
         this.email = email;
         this.age = age;
+        this.role = role;
     }
 }
