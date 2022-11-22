@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ToDoSaveRequestDto {
 
-    private Long id;
     private String content;
     private Boolean isCompleted;
 
-    public ToDoSaveRequestDto(Long id, String content, boolean isCompleted) {
-        this.id = id;
+    public ToDoSaveRequestDto(String content, boolean isCompleted) {
         this.content = content;
         this.isCompleted = isCompleted;
     }
