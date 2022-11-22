@@ -10,19 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TodoSaveRequestDto {
     private Long memberId;
-    private Long id;
     private String content;
     private Boolean isCompleted;
 
-    public TodoSaveRequestDto(Long id, String content, Boolean isCompleted) {
-        this.id = id;
+    public TodoSaveRequestDto(String content, Boolean isCompleted) {
         this.content = content;
         this.isCompleted = isCompleted;
     }
 
     public Todo toEntity(Member member) {
         return Todo.builder()
-                .id(id)
                 .content(content)
                 .isCompleted(isCompleted)
                 .member(member)
