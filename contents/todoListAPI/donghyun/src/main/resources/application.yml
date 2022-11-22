@@ -1,7 +1,29 @@
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Seoul
-    username: root
-    password: 3540
+    url: jdbc:mysql://localhost:3306/mydb?serverTimezone=UTC&characterEncoding=UTF-8
+    username: 1111
+    password: 1111
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+logging:
+  level:
+    org:
+      springframework:
+        nodeValue: debug
+        web: debug
+      apache:
+        coyote:
+          http11: debug
+
+springboot:
+  jwt:
+    secret: flature!@#
