@@ -16,26 +16,34 @@ public class ToDo extends BaseTimeEntity {
     private Long id;
     @Column(nullable = false)
     private String content;
-    @Column
-    private boolean isCompleted;
+    @Column(nullable = false)
+    private Boolean isCompleted;
+
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    public ToDo(Long id, String content, boolean isCompleted, Member member) {
-        this.id = id;
+    public ToDo(String content, boolean isCompleted, Member member) {
         this.content = content;
         this.isCompleted = isCompleted;
         this.member = member;
+    }
+
+    public static ToDo createTodo(String content, Boolean isCompleted, Member member) {
+        ToDo toDo = new ToDo();
+        toDo.content = content;
+        toDo.isCompleted = isCompleted;
+        toDo.member = member;
+        return toDo;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
+    public void setCompleted() {
+        this.isCompleted = !isCompleted;
     }
 
     public void setMember(Member member) {
