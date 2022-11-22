@@ -1,9 +1,7 @@
 package com.example.todolist.controller;
 
 import com.example.todolist.domain.Member;
-import com.example.todolist.dto.MemberResponseDto;
-import com.example.todolist.dto.MemberSaveRequestDto;
-import com.example.todolist.dto.MemberUpdateRequestDto;
+import com.example.todolist.dto.*;
 import com.example.todolist.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Api(tags = {"Member"})
 @RestController
@@ -32,8 +31,13 @@ public class MemberController {
 
     @ApiOperation("회원 전체 조회")
     @GetMapping
-    public List<Member> findMembers() {
-        return memberService.findMembers();
+    public List<MemberResponseDto> findMembers() {
+        List<Member> members = memberService.findMembers();
+        List<MemberResponseDto> memberResponseDtoList = members.stream()
+                .map(member -> new MemberResponseDto(member))
+                .collect(Collectors.toList());
+
+        return memberResponseDtoList;
     }
 
     @ApiOperation("회원 조회")
@@ -54,4 +58,9 @@ public class MemberController {
         return memberService.delete(memberId);
     }
 
+    @ApiOperation("로그인")
+    @PostMapping("/login")
+    public LoginResultDto login(@RequestBody MemberDefaultDto request) {
+        return memberService.login(request.getEmail(), request.getPassword());
+    }
 }

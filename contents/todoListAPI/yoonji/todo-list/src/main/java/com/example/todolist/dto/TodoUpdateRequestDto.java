@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 public class TodoUpdateRequestDto {
 
     private Boolean isCompleted;
+    private String content;
 
-    public TodoUpdateRequestDto(Boolean isCompleted) {
+    public TodoUpdateRequestDto(Boolean isCompleted, String content) {
         this.isCompleted = isCompleted;
+        this.content = content;
     }
 }

@@ -48,7 +48,7 @@ public class TodoService {
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 목록입니다."));
 
-        todo.update(requestDto.getIsCompleted());
+        todo.update(requestDto.getIsCompleted(), requestDto.getContent());
 
         return todoRepository.save(todo).getId();
     }
