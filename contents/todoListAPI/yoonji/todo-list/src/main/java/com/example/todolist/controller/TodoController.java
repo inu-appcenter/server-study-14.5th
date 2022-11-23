@@ -1,6 +1,7 @@
 package com.example.todolist.controller;
 
 import com.example.todolist.domain.Todo;
+import com.example.todolist.dto.MemberUpdateRequestDto;
 import com.example.todolist.dto.TodoResponseDto;
 import com.example.todolist.dto.TodoSaveRequestDto;
 import com.example.todolist.dto.TodoUpdateRequestDto;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Api(tags = {"ToDo"})
 @RestController
@@ -31,8 +33,13 @@ public class TodoController {
 
     @ApiOperation("ToDo 전체 조회")
     @GetMapping
-    public List<Todo> findTodos() {
-        return todoService.findTodo();
+    public List<TodoResponseDto> findTodos() {
+        List<Todo> toDos = todoService.findTodo();
+        List<TodoResponseDto> TodoResponseDtoList = toDos.stream()
+                .map(toDo -> new TodoResponseDto(toDo))
+                .collect(Collectors.toList());
+
+        return TodoResponseDtoList;
     }
 
     @ApiOperation("ToDo 조회")
@@ -41,10 +48,10 @@ public class TodoController {
         return todoService.findOne(todoId);
     }
 
-    @ApiOperation("ToDo 완료여부 변경")
+    @ApiOperation("ToDo 완료여부 및 내용 변경")
     @PutMapping("/{todoId}")
-    public Long updateTodo(@PathVariable Long todoId, @RequestBody TodoUpdateRequestDto todoUpdateRequestDto) {
-        return todoService.update(todoId, todoUpdateRequestDto);
+    public Long updateTodo(@PathVariable Long todoId, @RequestBody TodoUpdateRequestDto requestDto) {
+        return todoService.update(todoId, requestDto);
     }
 
     @ApiOperation("ToDo 삭제")
