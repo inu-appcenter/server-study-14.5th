@@ -1,8 +1,8 @@
 package com.appcenter.todolistapi.controller;
 
-import com.appcenter.todolistapi.domain.Todo;
-import com.appcenter.todolistapi.dto.TodoRequestDtoCreate;
-import com.appcenter.todolistapi.dto.TodoResponseDto;
+import com.appcenter.todolistapi.dto.TodoRequestDto;
+import com.appcenter.todolistapi.dto.TodoResponseDtoForMember;
+import com.appcenter.todolistapi.dto.TodoResponseDtoForTodo;
 import com.appcenter.todolistapi.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,18 +14,18 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping("/todos")
-    public void createTodo(@RequestBody TodoRequestDtoCreate todoRequestDtoCreate){
-        todoService.createTodo(todoRequestDtoCreate);
+    public void createTodo(@RequestBody TodoRequestDto todoRequestDto){
+        todoService.createTodo(todoRequestDto);
     }
 
     @GetMapping("/todos/{todoId}")
-    public TodoResponseDto readTodo(@PathVariable Long todoId){
+    public TodoResponseDtoForTodo readTodo(@PathVariable Long todoId){
         return todoService.readTodo(todoId);
     }
 
     @PutMapping("/todos/{todoId}")
-    public Todo updateTodo(@PathVariable Long todoId){
-        return todoService.updateTodo(todoId);
+    public void updateTodo(@PathVariable Long todoId){
+        todoService.updateTodo(todoId);
     }
 
     @DeleteMapping("todos/{todoId}")
