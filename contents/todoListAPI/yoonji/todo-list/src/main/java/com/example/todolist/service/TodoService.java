@@ -2,10 +2,7 @@ package com.example.todolist.service;
 
 import com.example.todolist.domain.Member;
 import com.example.todolist.domain.Todo;
-import com.example.todolist.dto.MemberResponseDto;
-import com.example.todolist.dto.TodoResponseDto;
-import com.example.todolist.dto.TodoSaveRequestDto;
-import com.example.todolist.dto.TodoUpdateRequestDto;
+import com.example.todolist.dto.*;
 import com.example.todolist.repository.SpringDataJpaMemberRepository;
 import com.example.todolist.repository.SpringDataJpaTodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +44,11 @@ public class TodoService {
     }
 
     // todo 수정
-    public Long update(Long id, TodoUpdateRequestDto todoUpdateRequestDto) {
-        Todo todo = todoRepository.findById(id)
+    public Long update(Long todoId, TodoUpdateRequestDto requestDto) {
+        Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 목록입니다."));
 
-        todo.update(todoUpdateRequestDto.isCompleted());
+        todo.update(requestDto.getIsCompleted(), requestDto.getContent());
 
         return todoRepository.save(todo).getId();
     }

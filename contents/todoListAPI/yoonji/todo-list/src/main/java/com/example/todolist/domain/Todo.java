@@ -20,7 +20,7 @@ public class Todo extends BaseTimeEntity{
 
     private String content;
 
-    private boolean isCompleted;
+    private Boolean isCompleted;
 
     @ManyToOne
     @JoinColumn
@@ -28,14 +28,15 @@ public class Todo extends BaseTimeEntity{
     private Member member;
 
     @Builder
-    public Todo(Long id, String content, boolean isCompleted, Member member) {
+    public Todo(Long id, String content, Boolean isCompleted, Member member) {
         this.id = id;
         this.content = content;
         this.isCompleted = isCompleted;
         this.member = member;
     }
 
-    public void update(boolean isCompleted) {
+    public void update(Boolean isCompleted, String content) {
         this.isCompleted = isCompleted;
+        this.content = content;
     }
 }

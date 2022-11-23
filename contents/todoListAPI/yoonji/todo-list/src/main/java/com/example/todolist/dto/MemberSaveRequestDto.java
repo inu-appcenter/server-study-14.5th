@@ -7,24 +7,24 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MemberSaveRequestDto {
-    private Long id;
     private String email;
+    private String password;
     private int age;
     private String name;
 
-    public MemberSaveRequestDto(Long id, String email, int age, String name) {
-        this.id = id;
+    public MemberSaveRequestDto(String email, String password, int age, String name) {
         this.email = email;
+        this.password = password;
         this.age = age;
         this.name = name;
     }
 
-    public Member toEntity() {
+    /*public Member toEntity() {
         return Member.builder()
-                .id(id)
+                .password(password)
                 .email(email)
                 .age(age)
                 .name(name)
                 .build();
-    }
+    }*/
 }

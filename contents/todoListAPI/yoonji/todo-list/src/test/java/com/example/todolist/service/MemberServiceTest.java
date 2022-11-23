@@ -23,7 +23,7 @@ class MemberServiceTest {
 
     @Test
     public void 회원가입() throws Exception {
-        MemberSaveRequestDto member = new MemberSaveRequestDto(0L, "naver.com", 26, "지경");
+        MemberSaveRequestDto member = new MemberSaveRequestDto("naver.com", "1234", 26, "지경");
 
         Long saveId = memberService.join(member);
 
@@ -33,8 +33,8 @@ class MemberServiceTest {
 
     @Test
     public void 중복_회원_예외() throws Exception{
-        MemberSaveRequestDto member1 = new MemberSaveRequestDto(0L, "naver.com", 26, "지경");
-        MemberSaveRequestDto member2 = new MemberSaveRequestDto(1L, "naver.com", 26, "지경");
+        MemberSaveRequestDto member1 = new MemberSaveRequestDto("naver.com", "1234", 26, "지경");
+        MemberSaveRequestDto member2 = new MemberSaveRequestDto("naver.com", "1234", 26, "지경");
 
         memberService.join(member1);
         IllegalStateException e = assertThrows(IllegalStateException.class,
@@ -46,8 +46,8 @@ class MemberServiceTest {
 
     @Test
     public void 전체_회원_조회() throws Exception {
-        MemberSaveRequestDto member1 = new MemberSaveRequestDto(0L, "gmail.com", 26, "이지경");
-        MemberSaveRequestDto member2 = new MemberSaveRequestDto(0L, "naver.com", 26, "저지경");
+        MemberSaveRequestDto member1 = new MemberSaveRequestDto("gmail.com", "1234", 26, "이지경");
+        MemberSaveRequestDto member2 = new MemberSaveRequestDto("naver.com", "1234", 26, "저지경");
 
         memberService.join(member1);
         memberService.join(member2);
