@@ -12,6 +12,8 @@ public class TodoResponseDto {
     private String name;
     private String content;
     private Boolean isCompleted;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Builder
     public TodoResponseDto(Todo todo) {
@@ -19,5 +21,7 @@ public class TodoResponseDto {
         this.name = todo.getMember().getName();
         this.content = todo.getContent();
         this.isCompleted = todo.getIsCompleted();
+        this.createdAt = todo.getCreatedAt();
+        this.updatedAt = todo.getUpdatedAt();
     }
 }
