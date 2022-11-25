@@ -1,6 +1,5 @@
 package com.example.todolist.dto;
 
-import com.example.todolist.domain.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
