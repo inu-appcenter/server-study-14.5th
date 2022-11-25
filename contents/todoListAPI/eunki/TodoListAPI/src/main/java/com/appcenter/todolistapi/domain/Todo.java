@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,7 +37,7 @@ public class Todo extends Timestamped {
         this.member = member;
     }
 
-    public void updateIsCompleted(){
-        this.isCompleted = !isCompleted;
+    public void update(){
+        this.isCompleted = !this.isCompleted;
     }
 }

@@ -4,14 +4,16 @@ import com.appcenter.todolistapi.domain.Member;
 import com.appcenter.todolistapi.domain.Todo;
 import com.appcenter.todolistapi.dto.MemberRequestDto;
 import com.appcenter.todolistapi.dto.MemberResponseDto;
-import com.appcenter.todolistapi.dto.TodoResponseDto;
+import com.appcenter.todolistapi.dto.TodoResponseDtoForMember;
 import com.appcenter.todolistapi.repository.MemberRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,17 +34,19 @@ public class MemberService {
     }
 
     @Transactional
+    @JsonIgnore
     public List<MemberResponseDto> readAll(){
         List<MemberResponseDto> memberResponseDtoList = new ArrayList<>();
         List<Member> memberList = memberRepository.findAll();
         for (Member member : memberList) {
-            List<TodoResponseDto> todoResponseDtoList = new ArrayList<>();
-            List<Todo> todoList = member.getTodoList();
-            for (Todo todo : todoList){
-                TodoResponseDto todoResponseDto = new TodoResponseDto(todo);
-                todoResponseDtoList.add(todoResponseDto);
-            }
-            MemberResponseDto memberResponseDto = new MemberResponseDto(member, todoResponseDtoList);
+            List<TodoResponseDtoForMember> todoResponseDtoForMemberList = new ArrayList<>();
+            //@JsonIgnore을 쓰니 필요 없어졌당..?
+//            List<Todo> todoList = member.getTodoList();
+//            for (Todo todo : todoList){
+//                TodoResponseDtoForMember todoResponseDtoForMember = new TodoResponseDtoForMember(todo);
+//                todoResponseDtoForMemberList.add(todoResponseDtoForMember);
+//            }
+            MemberResponseDto memberResponseDto = new MemberResponseDto(member, todoResponseDtoForMemberList);
             memberResponseDtoList.add( memberResponseDto );
         }
         return memberResponseDtoList;
@@ -53,18 +57,18 @@ public class MemberService {
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new RuntimeException("존재하지 않는 회원입니다")
         );
-        List<TodoResponseDto> todoResponseDtoList = new ArrayList<>();
+        List<TodoResponseDtoForMember> todoResponseDtoForMemberList = new ArrayList<>();
         List<Todo> todoList = member.getTodoList();
         for( Todo todo : todoList){
-            TodoResponseDto todoResponseDto = new TodoResponseDto(todo);
-            todoResponseDtoList.add(todoResponseDto);
+            TodoResponseDtoForMember todoResponseDtoForMember = new TodoResponseDtoForMember(todo);
+            todoResponseDtoForMemberList.add(todoResponseDtoForMember);
         }
-        MemberResponseDto memberResponseDto = new MemberResponseDto(member, todoResponseDtoList);
+        MemberResponseDto memberResponseDto = new MemberResponseDto(member, todoResponseDtoForMemberList);
         return memberResponseDto;
     }
 
-    public void updateMember(Long memberId, MemberRequestDto memberRequestDto){
-        Member oldMember = memberRepository.findById(memberId).orElseThrow(
+    public void updateMember(UUID memberId, MemberRequestDto memberRequestDto){
+        Member oldMember = memberRepository.findByMemberId(memberId).orElseThrow(
                 () -> new RuntimeException("존재하지 않는 회원입니다")
         );
 
@@ -76,10 +80,10 @@ public class MemberService {
         memberRepository.save(oldMember);
     }
 
-    public void deleteMember(Long memberId){
-        memberRepository.findById(memberId).orElseThrow(
+    public void deleteMember(UUID memberId){
+        memberRepository.findByMemberId(memberId).orElseThrow(
                 () -> new RuntimeException("존재하지 않는 회원입니다")
         );
-        memberRepository.deleteById(memberId);
+        memberRepository.deleteMemberByMemberId(memberId);
     }
 }
