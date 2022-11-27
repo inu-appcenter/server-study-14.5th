@@ -1,42 +1,40 @@
 # Juwon TodoListAPI
 
----
-
-## API ¸í¼¼¼­
+## API ëª…ì„¸ì„œ
 
 [API](https://www.notion.so/307a65c004d94daa97c8e5ea077f87ec)
 
-³ë¼Ç ¸µÅ©ÀÔ´Ï´Ù!
+ë…¸ì…˜ ë§í¬ìž…ë‹ˆë‹¤!
 
 ### Todo Login
 
-·Î±×ÀÎÀ» ÇØ¾ß ·Î±×ÀÎ / ·Î±×¾Æ¿ô Á¦¿Ü ¸ðµç ±â´ÉÀ» »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù
+ë¡œê·¸ì¸ì„ í•´ì•¼ ë¡œê·¸ì¸ / ë¡œê·¸ì•„ì›ƒ ì œì™¸ ëª¨ë“  ê¸°ëŠ¥ì„ ì‚¬ìš©í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤
 
-jwt Àü¿ªÃ³¸®¸¦ ÁøÇàÇØ¼­ ¿ìÃø »ó´ÜÀÇ ÀÎÁõ ¹öÆ°À» °¡Áö°í ·Î±×ÀÎÇÑ Ã¼·Î Å×½ºÆ®ÇÒ ¼ö ÀÖ½À´Ï´Ù!
+jwt ì „ì—­ì²˜ë¦¬ë¥¼ ì§„í–‰í•´ì„œ ìš°ì¸¡ ìƒë‹¨ì˜ ì¸ì¦ ë²„íŠ¼ì„ ê°€ì§€ê³  ë¡œê·¸ì¸í•œ ì²´ë¡œ í…ŒìŠ¤íŠ¸í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤!
 
-![ÀÎÁõ ¹öÆ°](./images/JWTLogin0.png)
+![ì¸ì¦ ë²„íŠ¼](images/JWTLogin0.PNG)
 
-ÀÎÁõ ¹öÆ°À» ´­·¯¼­ ÅäÅ« ÀÔ·ÂÇÒ ¼ö ÀÖ´Â Ã¢À» ¶ç¿ó´Ï´Ù
+ì¸ì¦ ë²„íŠ¼ì„ ëˆŒëŸ¬ì„œ í† í° ìž…ë ¥í•  ìˆ˜ ìžˆëŠ” ì°½ì„ ë„ì›ë‹ˆë‹¤
 
-![·Î±×ÀÎ](./images/JWTLogin1.png)
+![ë¡œê·¸ì¸](images/JWTLogin1.PNG)
 
-ÅäÅ«¿¡ ·Î±×ÀÎ ÈÄ ³ª¿Â ÅäÅ«À» ÀÔ·ÂÇØÁÝ´Ï´Ù
+í† í°ì— ë¡œê·¸ì¸ í›„ ë‚˜ì˜¨ í† í°ì„ ìž…ë ¥í•´ì¤ë‹ˆë‹¤
 
-![·Î±×¾Æ¿ô?](./images/JWTLogin2.png)
+![ë¡œê·¸ì•„ì›ƒ?](images/JWTLogin2.PNG)
 
-·Î±×¾Æ¿ôÀ» ´©¸£¸é ·Î±×¾Æ¿ôÀÌ µË´Ï´Ù
+ë¡œê·¸ì•„ì›ƒì„ ëˆ„ë¥´ë©´ ë¡œê·¸ì•„ì›ƒì´ ë©ë‹ˆë‹¤
 
 
-## ¿¹Á¤ °³¹ß »çÇ×
+## ì˜ˆì • ê°œë°œ ì‚¬í•­
 
-- Response °ª Á¦´ë·Î ³ª¿Ã ¼ö ÀÖ°Ô ÇÏ±â
+- Response ê°’ ì œëŒ€ë¡œ ë‚˜ì˜¬ ìˆ˜ ìžˆê²Œ í•˜ê¸°
 
-- ¿¹¿ÜÃ³¸® ¹× À¯È¿¼º°Ë»ç ±¸ÇöÇÏ±â
+- ì˜ˆì™¸ì²˜ë¦¬ ë° ìœ íš¨ì„±ê²€ì‚¬ êµ¬í˜„í•˜ê¸°
 
-- ADMIN, USER ¿ªÇÒÀÇ Â÷ÀÌ ±¸ÇöÇÏ±â (ÀüÃ¼ Á¶È¸´Â °ü¸®ÀÚ¸¸)
+- ADMIN, USER ì—­í• ì˜ ì°¨ì´ êµ¬í˜„í•˜ê¸° (ì „ì²´ ì¡°íšŒëŠ” ê´€ë¦¬ìžë§Œ)
 
-## ¿ä±¸»çÇ× ¹Ý¿µ ¿©ºÎ
+## ìš”êµ¬ì‚¬í•­ ë°˜ì˜ ì—¬ë¶€
 
-¿ä±¸»çÇ×À» ¾Ë·ÁÁÖ½Ã¸é ¿©±â¿¡ Ç¥½ÃÇÏ¸é¼­ ¹Ý¿µ ¿©ºÎ¸¦ ¾²°Ú½À´Ï´Ù
+ìš”êµ¬ì‚¬í•­ì„ ì•Œë ¤ì£¼ì‹œë©´ ì—¬ê¸°ì— í‘œì‹œí•˜ë©´ì„œ ë°˜ì˜ ì—¬ë¶€ë¥¼ ì“°ê² ìŠµë‹ˆë‹¤
 
 
