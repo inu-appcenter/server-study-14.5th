@@ -1,8 +1,8 @@
 package com.example.todo.Domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Entity
@@ -13,14 +13,13 @@ public class Todo extends BaseTimeEntity{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull(message = "내용을 입력해주세요")
 	private String contents;
 
-	@NotNull
 	private Boolean isCompleted;
 
 	@ManyToOne
 	@JoinColumn
+	@JsonIgnore
 	private Member member;
 
 	@Builder
@@ -31,8 +30,9 @@ public class Todo extends BaseTimeEntity{
 		this.isCompleted = isCompleted;
 	}
 
-	public void updateIsCompleted(Boolean isCompleted) {
-		this.isCompleted = !isCompleted;
+	public void update(String contents, Boolean isCompleted) {
+		this.contents = contents;
+		this.isCompleted = isCompleted;
 	}
 
 }

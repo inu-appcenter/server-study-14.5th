@@ -2,28 +2,30 @@ package com.example.todo.Dto;
 
 import com.example.todo.Domain.Member;
 import com.example.todo.Domain.Todo;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Positive;
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
+@ApiModel(value = "Member 응답")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberResponseDto {
 
+    @ApiModelProperty(position = 1, required = true, dataType = "Long", value = "식별자", example = "1")
     private Long id;
-    @Length(max = 20, message = "이름은 20자 이내로 입력해주세요")
+
+    @ApiModelProperty(position = 2, required = true, dataType = "String", value = "이름", example = "이주원")
     private String name;
 
-    @Positive(message = "나이를 다시 입력해주세요")
+    @ApiModelProperty(position = 3, required = true, dataType = "int", value = "나이", example = "20")
     private int age;
 
-    @Email(message = "이메일 형식에 맞게 입력해주세요")
+    @ApiModelProperty(position = 4, required = true, dataType = "String", value = "이메일", example = "example@inu.ac.kr")
     private String email;
+
+    @ApiModelProperty(position = 5, required = true, dataType = "List<Todo>", value = "할 일 목록")
     private List<Todo> todolist;
 
     public MemberResponseDto(Member member){
