@@ -2,14 +2,22 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: rubysoft
-    url: jdbc:mysql://localhost/todo_db
+    url: jdbc:mysql://localhost/todolist
     password: rubyonrails
+
   jpa:
     properties:
       hibernate:
-        show_sql: 'true'
+        show_sql: true
     hibernate:
       ddl-auto: create
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  profiles:
+    include: jwt
+
+
+

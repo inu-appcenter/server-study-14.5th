@@ -1,32 +1,42 @@
 package com.example.todo.Service;
 
-import com.example.todo.Dto.TodoRequestDto;
+import com.example.todo.Dto.TodoSaveRequestDto;
 import com.example.todo.Domain.Member;
 import com.example.todo.Domain.Todo;
 import com.example.todo.Dto.TodoResponseDto;
+import com.example.todo.Dto.TodoUpdateRequestDto;
 import com.example.todo.Repository.MemberRepository;
 import com.example.todo.Repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class TodoService {
     private final TodoRepository todoRepository;
     private final MemberRepository memberRepository;
 
     // todo 생성
-    public Long create(TodoRequestDto todoDTO) {
+    public Long create(Long memberId, TodoSaveRequestDto todoRequestDto) {
         log.info("todo 생성 시작");
-        Member member = memberRepository.findById(todoDTO.getMemberId()).get();
-        Todo todo = todoDTO.toEntity(member);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        Todo todo = todoRepository.save(todoRequestDto.toEntity(member));
         log.info("todo 생성 준비 | member & todo loaded");
-        todoRepository.save(todo);
-        log.info("todo 생성 완료 | id = " + todo.getId());
+        log.info("todo 생성 완료 |");
         return todo.getId();
+    }
+
+    // todo 조회 - 전체 조회
+    public List<Todo> findTodos() {
+        return todoRepository.findAll();
     }
 
     // todo 조회 - 식별자로 조회
@@ -39,12 +49,13 @@ public class TodoService {
     }
 
     // todo 수정
-    public void update(Long id) {
+    public void update(Long id, TodoUpdateRequestDto todoUpdateRequestDto) {
         log.info("todo 수정 | id = " + id);
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 목록입니다"));
         log.info("todo 수정 준비 | id = " + id);
-        todo.updateIsCompleted(todo.getIsCompleted());
+        todo.update(todoUpdateRequestDto.getContents(), todoUpdateRequestDto.getIsCompleted());
+        todoRepository.save(todo);
         log.info("todo 수정 완료 | id = " + id);
     }
 
