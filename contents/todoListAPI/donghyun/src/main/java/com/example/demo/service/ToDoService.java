@@ -18,7 +18,7 @@ public interface ToDoService {
     public List<ToDo> findToDos();
 
     // todo 조회
-    public Optional<ToDo> findById(Long toDoId);
+    public ToDo findById(Long toDoId);
 
     // todo 수정
     public void updateToDo(Long toDoId, ToDoUpdateRequestDto toDoUpdateRequestDto);

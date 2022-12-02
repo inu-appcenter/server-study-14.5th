@@ -1,9 +1,8 @@
 package com.example.demo.config.security;
 
-import com.example.demo.dto.EntryPointErrorResponse;
+import com.example.demo.exception.EntryPointErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.build.EntryPoint;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

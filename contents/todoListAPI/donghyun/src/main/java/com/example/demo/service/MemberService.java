@@ -16,13 +16,13 @@ public interface MemberService {
     public SignUpResultDto signUp(MemberSignUpRequestDto memberSignUpRequestDto);
 
     // 로그인
-    public SignUpResultDto signIn(MemberSignInRequestDto memberSignInRequestDto) throws RuntimeException;
+    public SignInResultDto signIn(MemberSignInRequestDto memberSignInRequestDto) throws RuntimeException;
 
     // 회원 목록
     public List<Member> findMembers();
 
     // 회원 조회
-    public Optional<Member> findById(Long memberId);
+    public Member findById(Long memberId);
 
     // 회원 수정
     public void updateMember(Long memberId, MemberUpdateRequestDto memberUpdateRequestDto);

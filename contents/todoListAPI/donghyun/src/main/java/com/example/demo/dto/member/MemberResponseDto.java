@@ -20,14 +20,14 @@ public class MemberResponseDto {
 
     private int age;
 
-    private List<ToDoDto> toDoDtoList;
+    private List<ToDoDto> toDoList;
 
     public MemberResponseDto(Member member) {
         this.id = member.getId();
         this.email = member.getEmail();
         this.age = member.getAge();
         this.name = member.getName();
-        this.toDoDtoList = member.getToDoList().stream()
+        this.toDoList = member.getToDoList().stream()
                 .map(todo -> new ToDoDto(todo))
                 .collect(Collectors.toList());
     }

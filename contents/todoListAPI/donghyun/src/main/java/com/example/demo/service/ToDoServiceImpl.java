@@ -4,6 +4,8 @@ import com.example.demo.domain.Member;
 import com.example.demo.domain.ToDo;
 import com.example.demo.dto.todo.ToDoSaveRequestDto;
 import com.example.demo.dto.todo.ToDoUpdateRequestDto;
+import com.example.demo.exception.CustomException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.JpaMemberRepository;
 import com.example.demo.repository.JpaToDoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.demo.exception.ErrorCode.*;
 
 @Service
 @Slf4j
@@ -44,14 +48,16 @@ public class ToDoServiceImpl implements ToDoService {
 
     // todo 조회
     @Override
-    public Optional<ToDo> findById(Long toDoId) {
-        return toDoRepository.findById(toDoId);
+    public ToDo findById(Long toDoId) {
+        return toDoRepository.findById(toDoId)
+                .orElseThrow(() -> new CustomException(TODO_NOT_FOUND));
     }
 
     // todo 수정
     @Override
     public void updateToDo(Long toDoId, ToDoUpdateRequestDto toDoUpdateRequestDto) {
-        ToDo toDo = toDoRepository.findById(toDoId).get();
+        ToDo toDo = toDoRepository.findById(toDoId)
+                .orElseThrow(() -> new CustomException(TODO_NOT_FOUND));
         toDo.setCompleted();
 
         toDoRepository.save(toDo);
@@ -60,6 +66,8 @@ public class ToDoServiceImpl implements ToDoService {
     // todo 삭제
     @Override
     public void deleteToDo(Long toDoId) {
+        toDoRepository.findById(toDoId)
+                .orElseThrow(() -> new CustomException(TODO_NOT_FOUND));
         toDoRepository.deleteById(toDoId);
     }
 }

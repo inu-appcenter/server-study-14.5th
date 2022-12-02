@@ -2,18 +2,18 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Member;
 import com.example.demo.domain.ToDo;
-import com.example.demo.dto.todo.ToDoResponseDto;
-import com.example.demo.dto.todo.ToDoSaveRequestDto;
-import com.example.demo.dto.todo.ToDoUpdateRequestDto;
+import com.example.demo.dto.ResponseResult;
+import com.example.demo.dto.todo.*;
 import com.example.demo.service.ToDoService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,64 +30,55 @@ public class ToDoController {
     }
 
     // todo 생성
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token",
-                    required = true, dataType = "String", paramType = "header")
-    })
     @PostMapping
-    public Long saveToDo (@RequestBody ToDoSaveRequestDto toDoSaveRequestDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ToDoSaveResponse saveToDo (@RequestBody @Validated ToDoSaveRequestDto toDoSaveRequestDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = (Member)authentication.getPrincipal();
         log.info("memberId = {}, memberName = {}, memberPassword = ****", member.getMemberId(), member.getName());
         Long saveToDo = toDoService.saveToDo(member.getMemberId(), toDoSaveRequestDto);
 
-        return saveToDo;
+        return new ToDoSaveResponse(saveToDo, true, "todo 생성 완료");
     }
 
     // todo 목록
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token",
-                    required = true, dataType = "String", paramType = "header")
-    })
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<ToDoResponseDto> findById () {
         List<ToDo> toDos = toDoService.findToDos();
         List<ToDoResponseDto> toDoResponseDtoList = toDos.stream()
                 .map(toDo -> new ToDoResponseDto(toDo))
                 .collect(Collectors.toList());
 
+        Collections.reverse(toDoResponseDtoList);
         return toDoResponseDtoList;
     }
 
     // todo 조회
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token",
-                    required = true, dataType = "String", paramType = "header")
-    })
     @GetMapping("/{toDoId}")
+    @ResponseStatus(HttpStatus.OK)
     public ToDoResponseDto findById (@PathVariable Long toDoId) {
-        ToDo toDo = toDoService.findById(toDoId).get();
+        ToDo toDo = toDoService.findById(toDoId);
 
         return new ToDoResponseDto(toDo);
     }
 
     // todo 수정
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token",
-                    required = true, dataType = "String", paramType = "header")
-    })
     @PatchMapping("/{toDoId}")
-    public void updateToDo (@PathVariable Long toDoId, @RequestBody ToDoUpdateRequestDto toDoUpdateRequestDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseResult updateToDo (@PathVariable Long toDoId, @RequestBody @Validated ToDoUpdateRequestDto toDoUpdateRequestDto) {
         toDoService.updateToDo(toDoId, toDoUpdateRequestDto);
+
+        return new ResponseResult(true, "todo 수정 완료");
     }
 
     // todo 삭제
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token",
-                    required = true, dataType = "String", paramType = "header")
-    })
     @DeleteMapping("/{toDoId}")
-    public void deleteToDo (@PathVariable Long toDoId) {
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseResult deleteToDo (@PathVariable Long toDoId) {
+        log.info("[todo 삭제 시작]");
         toDoService.deleteToDo(toDoId);
+        log.info("[todo 삭제 완료]");
+        return new ResponseResult(true, "todo 삭제 완료");
     }
 }

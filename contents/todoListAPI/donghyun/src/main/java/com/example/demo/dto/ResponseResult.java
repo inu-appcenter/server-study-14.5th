@@ -1,4 +1,4 @@
-package com.example.demo.dto.sign;
+package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class SignUpResultDto {
+public class ResponseResult {
 
     private Boolean success;
 
